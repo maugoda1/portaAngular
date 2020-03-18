@@ -8,6 +8,7 @@ import { map } from 'rxjs/Operators';
 export class ProductosService {
 
   cargando = false;
+  idItem = '';
 
   constructor(
     private http: HttpClient
@@ -26,4 +27,17 @@ export class ProductosService {
         })
       )
   }
+
+  cargarProducto(id: string) {
+    this.idItem = id;
+    return this.http.get('https://angular-html-52d8a.firebaseio.com/productos/' + id + '.json')
+      .pipe(
+        map ((resp ) => {
+          //console.log(resp);
+          this.cargando = false;
+          return resp;
+        })
+      )
+  }
+
 }
